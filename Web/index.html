@@ -1,4 +1,4 @@
-ï»¿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <style>
@@ -22,12 +22,12 @@
     <div id="searchContainer" style="display:none;background-color :#fff;border :2px solid #fff;border-radius :3px;box-shadow :0 2px 6px rgba(0,0,0,.3);cursor :pointer; margin-bottom :22px; text-align:center;">
         <input type="text" id="pokemonQuery" />
         <ul id="pokemonList"></ul>
-        <button id="btnAction">Search !</button>
+        <button id="btnAction">Search!</button>
     </div>
     <div id="loginContainer" style="display:none;background-color :#fff;border :2px solid #fff;border-radius :3px;box-shadow :0 2px 6px rgba(0,0,0,.3);cursor :pointer; margin-bottom :22px; text-align:center;">
         <input type="text" id="login" />
         <input type="password" id="password" />
-        <button id="btnActionLogin">Filter My pokemons !</button>
+        <button id="btnActionLogin">Filter My Pokemon!</button>
     </div>
 
 
@@ -42,11 +42,20 @@
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
+		
+		if (lang=='en') {
         var selectedPokemons = [
             { PokedexNumber: 19, Name: 'Rattata' },
-            { PokedexNumber: 16, Name: 'Roucool' },
-            { PokedexNumber: 41, Name: 'Nosferapti' },
-            { PokedexNumber: 21, Name: 'Piafabec' }];
+            { PokedexNumber: 16, Name: 'Pidgey' },
+            { PokedexNumber: 41, Name: 'Zubat' },
+            { PokedexNumber: 21, Name: 'Spearow' }];
+		} else if (lang=='de') {
+        var selectedPokemons = [
+            { PokedexNumber: 19, Name: 'Rattfratz' },
+            { PokedexNumber: 16, Name: 'Taubsi' },
+            { PokedexNumber: 41, Name: 'Zubat' },
+            { PokedexNumber: 21, Name: 'Habitak' }];
+		}
         var filterDiv = null;
         var lang = getParameterByName('lang') == null ? 'fr' : getParameterByName('lang');
         var loginDiv = null;
@@ -201,7 +210,7 @@
             var st = "<ul class=\"tooltip-spawn\">";
             Enumerable.From(spawn.Encounters).ForEach(function (enc) {
                 var m = moment.utc(enc.Time, 'HH:mm:ss.zzzzzzz')
-                st += '<li><img src="images/icons/' + enc.PokemonId + '.png" style="width:30px;height:30px"/>' + enc.PokemonName + " Ã  " + m.local().format("HH:mm") + "</li>";
+                st += '<li><img src="images/icons/' + enc.PokemonId + '.png" style="width:30px;height:30px"/>' + enc.PokemonName + " à " + m.local().format("HH:mm") + "</li>";
             });
             st += "</ul>"
             var tooltip = new google.maps.InfoWindow({ content: st });
@@ -235,7 +244,7 @@
             });
         }
         function attachToolTip(marker, pokemon) {
-            pokemon.Info = new google.maps.InfoWindow({ content: "<h1>" + pokemon.Name + "</h1><br/>Disparait Ã  " + new Date(pokemon.ExpirationTime).toLocaleTimeString() });
+            pokemon.Info = new google.maps.InfoWindow({ content: "<h1>" + pokemon.Name + "</h1><br/>Disparait à " + new Date(pokemon.ExpirationTime).toLocaleTimeString() });
             marker.addListener('click', function () {
                 pokemon.Info.open(marker.get('map'), marker);
             });
